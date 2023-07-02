@@ -109,7 +109,7 @@ torchrun --nnodes=1 --nproc_per_node=2 --rdzv_id=1  --rdzv_endpoint=localhost:12
 | Model             | 基座模型 | 链接                                                         |
 | ----------------- | -------- | ------------------------------------------------------------ |
 | SentCPM-delta-1b  | CPM-1b   | [cpm-1b-delta](https://github.com/guankaisi/SentCPM/blob/main/SentCPM/cpm_finetune/cpm-bee-1b-delta.pt) |
-| SentCPM-delta-10b | CPM-10b  | [cpm-10b-delta]([SentCPM/SentCPM/cpm_finetune/cpm-bee-10b-delta.pt at main · guankaisi/SentCPM · GitHub](https://github.com/guankaisi/SentCPM/blob/main/SentCPM/cpm_finetune/cpm-bee-10b-delta.pt)) |
+| SentCPM-delta-10b | CPM-10b  | [cpm-10b-delta](https://github.com/guankaisi/SentCPM/blob/main/SentCPM/cpm_finetune/cpm-bee-10b-delta.pt) |
 
 ##  🌸如何测试
 

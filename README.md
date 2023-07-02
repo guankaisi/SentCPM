@@ -35,10 +35,10 @@ pip install -r requirements.txt
 加载模型和delta模型，将隐藏层充当其sentence-embedding
 
 ```python
-bmt.init_distributed(seed=1024)
-    # Load transformers' model checkpoint
-    config = CPMBeeConfig.from_json_file('config/cpm-bee-1b.json')
-    tokenizer = CPMBeeTokenizer()
+		bmt.init_distributed(seed=1024)
+		# Load transformers' model checkpoint
+		config = CPMBeeConfig.from_json_file('config/cpm-bee-1b.json')
+		tokenizer = CPMBeeTokenizer()
     model = CPMBee(config=config)
     bmt.load(model,'cpm-bee-1b-ckpt.pt')
     delta_model = LoraModel(
@@ -102,16 +102,14 @@ torchrun --nnodes=1 --nproc_per_node=2 --rdzv_id=1  --rdzv_endpoint=localhost:12
 --use-delta
 ```
 
-
-
 ## 🔗delta 模型
 
 我们对cpm-1b和cpm-10b模型进行句向量微调，并开源出相应delta-model
 
-| Model             | 基座模型 | 链接 |
-| ----------------- | -------- | ---- |
-| SentCPM-delta-1b  | CPM-1b   |      |
-| SentCPM-delta-10b | CPM-10b  |      |
+| Model             | 基座模型 | 链接                                                         |
+| ----------------- | -------- | ------------------------------------------------------------ |
+| SentCPM-delta-1b  | CPM-1b   | [cpm-1b-delta](https://github.com/guankaisi/SentCPM/blob/main/SentCPM/cpm_finetune/cpm-bee-1b-delta.pt) |
+| SentCPM-delta-10b | CPM-10b  | [cpm-10b-delta]([SentCPM/SentCPM/cpm_finetune/cpm-bee-10b-delta.pt at main · guankaisi/SentCPM · GitHub](https://github.com/guankaisi/SentCPM/blob/main/SentCPM/cpm_finetune/cpm-bee-10b-delta.pt)) |
 
 ##  🌸如何测试
 
@@ -166,14 +164,16 @@ python evaluation_cpm.py \
 
 在Transfer数据集上效果
 
-| Model                                              | MR        | CR        | SUBJ      | MPQA      | SST       | TREC      | MRPC  | Avg.      |
-| -------------------------------------------------- | --------- | --------- | --------- | --------- | --------- | --------- | ----- | --------- |
-| simcse-cpm-1b                                      | 85.10     | 90.28     | 94.43     | 90.53     | 90.01     | 91.20     | 76.46 | 88.29     |
-| simcse-cpm-10b                                     | **89.22** | 92.21     | **95.12** | **91.34** | **93.47** | 91.20     | 75.13 | **89.67** |
-| avg-bert                                           | 78.66     | 86.25     | 94.37     | 88.66     | 84.40     | **92.80** | 69.54 | 84.94     |
-| SimCSE-RoBERT large                                | 88.12     | **92.37** | 95.11     | 90.49     | 92.75     | 91.80     | 76.64 | 89.61     |
-| [m3ebase](https://huggingface.co/moka-ai/m3e-base) | 71.67     | 80.55     | 88.02     | 81.56     | 72.27     | 85.40     | 70.84 | 78.62     |
-| GPT-embedding-002                                  |           |           |           |           |           |           |       |           |
+**注意：Transfer数据集测试时，经过白化可能会降低效果**
+
+| Model                                              | MR        | CR        | SUBJ      | MPQA  | SST        | TREC       | MRPC      | Avg.      |
+| -------------------------------------------------- | --------- | --------- | --------- | ----- | ---------- | ---------- | --------- | --------- |
+| simcse-cpm-1b                                      | 85.10     | 90.28     | 94.43     | 90.53 | 90.01      | 91.20      | **76.46** | 88.29     |
+| simcse-cpm-10b                                     | 89.22     | 92.21     | 95.12     | 91.34 | 93.47      | 91.20      | 75.13     | 89.67     |
+| avg-bert                                           | 78.66     | 86.25     | 94.37     | 88.66 | 84.40      | 92.80      | 69.54     | 84.94     |
+| SimCSE-RoBERT large                                | 88.12     | 92.37     | 95.11     | 90.49 | 92.75      | 91.80      | 76.64     | 89.61     |
+| [m3ebase](https://huggingface.co/moka-ai/m3e-base) | 71.67     | 80.55     | 88.02     | 81.56 | 72.27      | 85.40      | 70.84     | 78.62     |
+| GPT-embedding-002                                  | **88.88** | **92.90** | **95.74** | 91.48 | **93.85 ** | **96.40 ** | 73.86     | **90.44** |
 
 Chinese STS-Benchmark
 
@@ -184,6 +184,9 @@ Chinese STS-Benchmark
 | simcse-cpm-1b             | 0.838             | 0.7743             |
 | **simcse-cpm-10b**        | **0.836**         | **0.7936**         |
 | m3e-base                  | 0.8245            | 0.7753             |
+| GPT-embedding-002         | 0.7672            | 0.7058             |
+
+
 
 
 
